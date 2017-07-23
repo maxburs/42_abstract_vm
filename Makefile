@@ -1,4 +1,4 @@
-NAME := abstract_vm
+NAME := avm
 
 SRC_DIR := src
 BUILD_DIR := build
@@ -11,6 +11,7 @@ CC := clang++
 SRC := \
 	main.cpp \
 	abstract_vm.cpp \
+	operand_factory.cpp
 
 OBJ := $(SRC:.cpp=.o)
 

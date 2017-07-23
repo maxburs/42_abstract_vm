@@ -1,12 +1,13 @@
 #ifndef INT8_H_
 # define INT8_H_
 
-# include <ioperand.h>
+# include <ioperand.h> //IOperand, eOperandtype
 # include <string> //string
 # include <cstdint> //int8_t
 # include <sstream> //stringstream
-# include <convert.h>
-# include <algorithm> //max
+# include <convert.h> //toString()
+# include <algorithm> //max()
+# include <exception> //exception
 
 template <typename T>
 class Operand : public IOperand
@@ -100,6 +101,8 @@ public:
             case Double:
                 ss << from_string<double>(this->toString()) / from_string<double>(rhs.toString());
                 break ;
+            default:
+                throw std::exception();
         }
         return new Operand<T>(ss.str());
     }
@@ -121,12 +124,8 @@ public:
             case Int32:
                 ss << from_string<int32_t>(this->toString()) % from_string<int32_t>(rhs.toString());
                 break ;
-            case Float:
-                ss << from_string<float>(this->toString()) % from_string<float>(rhs.toString());
-                break ;
-            case Double:
-                ss << from_string<double>(this->toString()) % from_string<double>(rhs.toString());
-                break ;
+            default:
+                throw std::exception();
         }
         return new Operand<T>(ss.str());
     }
