@@ -4,11 +4,9 @@ SRC_DIR := src
 BUILD_DIR := build
 INCLUDE_DIR := include
 
-CXXFLAGS := -Wall -Wextra -Werror -pedantic
+FLAGS := -g -Wall -Wextra -Werror -pedantic -std=c++11 -I ./$(INCLUDE_DIR)
 
-CXXFLAGS := -I ./$(INCLUDE_DIR)
-
-CXX := clang++
+CC := clang++
 
 SRC := \
 	main.cpp \
@@ -21,10 +19,10 @@ HEADERS := $(shell find $(INCLUDE_DIR) -name *.h)
 all: $(NAME)
 
 $(NAME): $(addprefix $(BUILD_DIR)/,$(OBJ))
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^
+	$(CC) $(FLAGS) -o $@ $^
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(HEADERS) | $(BUILD_DIR)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
+	$(CC) $(FLAGS) -c -o $@ $<
 
 $(BUILD_DIR):
 	mkdir $(BUILD_DIR)
