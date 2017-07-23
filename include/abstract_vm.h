@@ -1,15 +1,21 @@
 #ifndef ABSTRACT_VM_H_
 # define ABSTRACT_VM_H_
 
+# include <stack> //stack
+# include <ioperand.h>
+
 class AbstractVM
 {
-    public:
-        AbstractVM(void);
-        AbstractVM(AbstractVM const &target);
-        ~AbstractVM(void);
-        AbstractVM &operator=(AbstractVM const &target);
+private:
+    std::stack<IOperand*> _stack;
 
-        void run(void);
+public:
+    AbstractVM(void);
+    AbstractVM(AbstractVM const &target);
+    virtual ~AbstractVM(void);
+    AbstractVM &operator=(AbstractVM const &target);
+
+    void run(void);
 };
 
 #endif

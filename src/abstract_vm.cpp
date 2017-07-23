@@ -1,5 +1,9 @@
 #include <abstract_vm.h>
+#include <operand.h>
+#include <stack> //stack
+
 #include <iostream>
+
 
 AbstractVM::AbstractVM(void) {}
 
