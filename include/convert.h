@@ -17,7 +17,7 @@ T from_string(std::string const &str)
 }
 
 template <>
-int8_t from_string(std::string const &str)
+inline int8_t from_string(std::string const &str)
 {
     int32_t value;
     std::stringstream ss;
