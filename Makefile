@@ -11,7 +11,8 @@ CC := clang++
 SRC := \
 	main.cpp \
 	abstract_vm.cpp \
-	operand_factory.cpp
+	operand_factory.cpp \
+	ioperand.cpp
 
 OBJ := $(SRC:.cpp=.o)
 

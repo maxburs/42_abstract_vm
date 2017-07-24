@@ -2,6 +2,7 @@
 # define IOPERAND_H_
 
 # include <string> // string
+# include <iostream> //ostream
 
 enum eOperandType
 {
@@ -28,5 +29,7 @@ public:
 
     virtual ~IOperand( void ) {}
 };
+
+std::ostream &operator<<(std::ostream &os, IOperand const &op);
 
 #endif
