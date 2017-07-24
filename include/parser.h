@@ -2,6 +2,7 @@
 # define PARSER_H_
 
 # include <ioperand.h> //IOperand, eOperandType
+# include <operand_factory.h> //OperandFactory
 # include <string> //string
 
 enum eInstructionType
@@ -19,20 +20,20 @@ enum eInstructionType
     Exit
 };
 
-
 class Parser
 {
 private:
+    Parser(Parser const &target); //can cause double free
+    Parser &operator=(Parser const &target); //this can too
+
     static const std::string _instructions[];
     static const std::string _values[];
-    IOperand const *operand;
+    static OperandFactory const _factory;
+    IOperand const *_operand;
 
 public:
     Parser(void);
-    Parser(Parser const &target);
     ~Parser(void);
-    Parser &operator=(Parser const &target);
-
 
     eInstructionType nextInstructionType(void);
 

@@ -3,6 +3,7 @@
 #include <ioperand.h> //eOperandType, IOperand
 #include <operand.h> //Operand
 #include <operand_factory.h> //OperandFactory
+#include <parser.h> //Parser
 
 #include <vector> //vector
 
