@@ -1,13 +1,13 @@
 #ifndef ABSTRACT_VM_H_
 # define ABSTRACT_VM_H_
 
-# include <stack> //stack
+# include <vector> //vector
 # include <ioperand.h>
 
 class AbstractVM
 {
 private:
-    std::stack<IOperand*> _stack;
+    std::vector<IOperand*> _vector;
 
 public:
     AbstractVM(void);

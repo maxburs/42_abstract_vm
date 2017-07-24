@@ -4,14 +4,14 @@
 #include <operand.h> //Operand
 #include <operand_factory.h> //OperandFactory
 
-#include <stack> //stack
+#include <vector> //vector
 
 #include <iostream> //cout
 
 
-AbstractVM::AbstractVM(void) : _stack() {}
+AbstractVM::AbstractVM(void) : _vector() {}
 
-AbstractVM::AbstractVM(AbstractVM const &target) : _stack(target._stack) {}
+AbstractVM::AbstractVM(AbstractVM const &target) : _vector(target._vector) {}
 
 AbstractVM::~AbstractVM(void)
 {
@@ -20,7 +20,7 @@ AbstractVM::~AbstractVM(void)
 
 AbstractVM &AbstractVM::operator=(AbstractVM const &target)
 {
-    this->_stack = target._stack;;
+    this->_vector = target._vector;;
 
     return *this;
 }

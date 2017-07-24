@@ -12,7 +12,8 @@ SRC := \
 	main.cpp \
 	abstract_vm.cpp \
 	operand_factory.cpp \
-	ioperand.cpp
+	ioperand.cpp \
+	parser.cpp
 
 OBJ := $(SRC:.cpp=.o)
 
