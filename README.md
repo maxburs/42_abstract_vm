@@ -1,8 +1,10 @@
+```
 S := INSTR [SEP INSTR]* #
 
 INSTR :=
       push VALUE
-    | pop | dump
+    | pop
+    | dump
     | assert VALUE
     | add
     | sub
@@ -24,3 +26,4 @@ N := [-]?[0..9]+
 Z := [-]?[0..9]+.[0..9]+
 
 SEP := '\n'+
+```
