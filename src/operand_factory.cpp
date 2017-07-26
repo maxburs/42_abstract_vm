@@ -32,6 +32,7 @@ IOperand const *OperandFactory::createDouble(std::string const &value) const
 
 IOperand const * OperandFactory::createOperand( eOperandType type, std::string const &value ) const
 {
+    //todo: use array of func pointers
     switch (type)
     {
         case Int8:

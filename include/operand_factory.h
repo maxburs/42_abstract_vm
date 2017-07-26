@@ -14,7 +14,7 @@ class OperandFactory
         IOperand const *createDouble(std::string const &value) const;
 
     public:
-        IOperand const * createOperand( eOperandType type, std::string const &value ) const;
+        IOperand const * createOperand(eOperandType type, std::string const &value) const;
 };
 
 #endif

@@ -28,21 +28,15 @@ AbstractVM &AbstractVM::operator=(AbstractVM const &target)
 
 void AbstractVM::run(void)
 {
-    OperandFactory factory;
-    Operand<int8_t> const a("5");
-    Operand<double> const b("7.001");
-    IOperand const *c = a + b;
+    eInstructionType type;
+    IOperand const *op = nullptr;
 
-    std::cout << "a: " << a << "\n";
-    std::cout << "b: " << b << "\n";
-    std::cout << "c: " << *c << "\n";
-
-    delete c;
-
-    c = b - a;
-    std::cout << "c: " << *c << "\n";
-
-    IOperand const *d = factory.createOperand(Int16, "10");
-
-    std::cout << "d: " << *d << "\n";
+    while (Exit != (type = this->_parser.nextInstructionType()))
+    {
+        std::cout << "instr: " << type << "\n";
+        op = this->_parser.getOperand();
+        if (op)
+            std::cout << *op << "\n";
+        delete op;
+    }
 }
