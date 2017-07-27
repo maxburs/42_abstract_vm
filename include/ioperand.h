@@ -4,6 +4,7 @@
 # include <string> // string
 # include <iostream> //ostream
 
+//also precision order
 enum eOperandType
 {
     Int8 = 0,

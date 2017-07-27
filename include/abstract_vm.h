@@ -3,13 +3,27 @@
 
 # include <vector> //vector
 # include <ioperand.h> //IOperand
-#include <parser.h> //Parser
+# include <parser.h> //Parser
+# include <operand_factory.h> //OperandFactory
 
 class AbstractVM
 {
 private:
-    std::vector<IOperand*> _vector;
+    std::vector<IOperand const *> _vector;
     Parser _parser;
+
+    static void (AbstractVM::* const _instructions[])(void);
+
+    void _push(void);
+    void _pop(void);
+    void _dump(void);
+    void _assert(void);
+    void _add(void);
+    void _sub(void);
+    void _mul(void);
+    void _div(void);
+    void _mod(void);
+    void _print(void);
 
 public:
     AbstractVM(void);

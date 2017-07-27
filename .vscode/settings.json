@@ -21,6 +21,10 @@
         "ratio": "cpp",
         "tuple": "cpp",
         "type_traits": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "__bit_reference": "cpp",
+        "iterator": "cpp",
+        "regex": "cpp",
+        "unordered_map": "cpp"
     }
 }
