@@ -9,16 +9,21 @@
 # include <algorithm> //max()
 # include <exception> //exception
 
+//needs to throw error on bad cast?
+template <typename T>
+T convertOperand(IOperand const & op);
+
 template <typename T>
 class Operand : public IOperand
 {
 private:
-    std::string _value;
+    T _value;
     Operand<T>(void) : _value("0") {}
 
 public:
     Operand<T>(Operand<T> const &target) : _value(target._value) {}
     Operand<T>(std::string const &value) : _value(value) {}
+    Operand<T>(T const value) : _value(value) {}
     virtual ~Operand<T>(void) {}
     Operand<T> &operator=(Operand<T> const &target)
     {
@@ -30,109 +35,169 @@ public:
     {
         return this->getType();
     }
-    eOperandType getType( void ) const;
-
-    IOperand const * operator+( IOperand const & rhs ) const
-    {
-        std::stringstream ss;
-
-        if (this->getPrecision() < rhs.getPrecision())
-            return rhs + *this;
-        
-        ss << from_string<T>(this->toString()) + from_string<T>(rhs.toString());
-        return new Operand<T>(ss.str());
+    eOperandType getType(void) const;
+    T getValue(void) const {
+        return this._value;
     }
-    IOperand const * operator-( IOperand const & rhs ) const
+
+    IOperand const * operator+(IOperand const & rhs) const
     {
-        std::stringstream ss;
         auto precision = std::max(this->getPrecision(), rhs.getPrecision());
-        
+
         switch (precision)
         {
             case Int8:
-                ss << from_string<int8_t>(this->toString()) - from_string<int8_t>(rhs.toString());
-                break ;
+                return new Operand<int8_t>(
+                    convertOperand<int8_t>(this) + convertOperand<int8_t>(rhs)
+                );
             case Int16:
-                ss << from_string<int16_t>(this->toString()) - from_string<int16_t>(rhs.toString());
-                break ;
+                return new Operand<int16_t>(
+                    convertOperand<int16_t>(this) + convertOperand<int16_t>(rhs)
+                );
             case Int32:
-                ss << from_string<int32_t>(this->toString()) - from_string<int32_t>(rhs.toString());
-                break ;
+                return new Operand<int32_t>(
+                    convertOperand<int32_t>(this) + convertOperand<int32_t>(rhs)
+                );
             case Float:
-                ss << from_string<float>(this->toString()) - from_string<float>(rhs.toString());
-                break ;
+                return new Operand<float>(
+                    convertOperand<float>(this) + convertOperand<float>(rhs)
+                );
             case Double:
-                ss << from_string<double>(this->toString()) - from_string<double>(rhs.toString());
-                break ;
+                return new Operand<double>(
+                    convertOperand<double>(this) + convertOperand<double>(rhs)
+                );
+            default:
+                throw std::exception();
         }
-        return new Operand<T>(ss.str());
+    }
+    IOperand const * operator-(IOperand const & rhs) const
+    {
+        auto precision = std::max(this->getPrecision(), rhs.getPrecision());
+
+        switch (precision)
+        {
+            case Int8:
+                return new Operand<int8_t>(
+                    convertOperand<int8_t>(this) - convertOperand<int8_t>(rhs)
+                );
+            case Int16:
+                return new Operand<int16_t>(
+                    convertOperand<int16_t>(this) - convertOperand<int16_t>(rhs)
+                );
+            case Int32:
+                return new Operand<int32_t>(
+                    convertOperand<int32_t>(this) - convertOperand<int32_t>(rhs)
+                );
+            case Float:
+                return new Operand<float>(
+                    convertOperand<float>(this) - convertOperand<float>(rhs)
+                );
+            case Double:
+                return new Operand<double>(
+                    convertOperand<double>(this) - convertOperand<double>(rhs)
+                );
+            default:
+                throw std::exception();
+        }
     }
     IOperand const * operator*( IOperand const & rhs ) const
     {
-        std::stringstream ss;
+        auto precision = std::max(this->getPrecision(), rhs.getPrecision());
 
-        if (this->getPrecision() < rhs.getPrecision())
-            return rhs * *this;
-        
-        ss << from_string<T>(this->toString()) * from_string<T>(rhs.toString());
-        return new Operand<T>(ss.str());
+        switch (precision)
+        {
+            case Int8:
+                return new Operand<int8_t>(
+                    convertOperand<int8_t>(this) * convertOperand<int8_t>(rhs)
+                );
+            case Int16:
+                return new Operand<int16_t>(
+                    convertOperand<int16_t>(this) * convertOperand<int16_t>(rhs)
+                );
+            case Int32:
+                return new Operand<int32_t>(
+                    convertOperand<int32_t>(this) * convertOperand<int32_t>(rhs)
+                );
+            case Float:
+                return new Operand<float>(
+                    convertOperand<float>(this) * convertOperand<float>(rhs)
+                );
+            case Double:
+                return new Operand<double>(
+                    convertOperand<double>(this) * convertOperand<double>(rhs)
+                );
+            default:
+                throw std::exception();
+        }
     }
     IOperand const * operator/( IOperand const & rhs ) const
     {
-        std::stringstream ss;
         auto precision = std::max(this->getPrecision(), rhs.getPrecision());
-
-        //TODO: check for divion by zero
 
         switch (precision)
         {
             case Int8:
-                ss << from_string<int8_t>(this->toString()) / from_string<int8_t>(rhs.toString());
-                break ;
+                return new Operand<int8_t>(
+                    convertOperand<int8_t>(this) / convertOperand<int8_t>(rhs)
+                );
             case Int16:
-                ss << from_string<int16_t>(this->toString()) / from_string<int16_t>(rhs.toString());
-                break ;
+                return new Operand<int16_t>(
+                    convertOperand<int16_t>(this) / convertOperand<int16_t>(rhs)
+                );
             case Int32:
-                ss << from_string<int32_t>(this->toString()) / from_string<int32_t>(rhs.toString());
-                break ;
+                return new Operand<int32_t>(
+                    convertOperand<int32_t>(this) / convertOperand<int32_t>(rhs)
+                );
             case Float:
-                ss << from_string<float>(this->toString()) / from_string<float>(rhs.toString());
-                break ;
+                return new Operand<float>(
+                    convertOperand<float>(this) / convertOperand<float>(rhs)
+                );
             case Double:
-                ss << from_string<double>(this->toString()) / from_string<double>(rhs.toString());
-                break ;
+                return new Operand<double>(
+                    convertOperand<double>(this) / convertOperand<double>(rhs)
+                );
             default:
                 throw std::exception();
         }
-        return new Operand<T>(ss.str());
     }
     IOperand const * operator%( IOperand const & rhs ) const
     {
-        std::stringstream ss;
         auto precision = std::max(this->getPrecision(), rhs.getPrecision());
-        
-        //TODO: check for divion by zero
-        
+
         switch (precision)
         {
             case Int8:
-                ss << from_string<int8_t>(this->toString()) % from_string<int8_t>(rhs.toString());
-                break ;
+                return new Operand<int8_t>(
+                    convertOperand<int8_t>(this) % convertOperand<int8_t>(rhs)
+                );
             case Int16:
-                ss << from_string<int16_t>(this->toString()) % from_string<int16_t>(rhs.toString());
-                break ;
+                return new Operand<int16_t>(
+                    convertOperand<int16_t>(this) % convertOperand<int16_t>(rhs)
+                );
             case Int32:
-                ss << from_string<int32_t>(this->toString()) % from_string<int32_t>(rhs.toString());
-                break ;
+                return new Operand<int32_t>(
+                    convertOperand<int32_t>(this) % convertOperand<int32_t>(rhs)
+                );
+            case Float:
+                return new Operand<float>(
+                    convertOperand<float>(this) % convertOperand<float>(rhs)
+                );
+            case Double:
+                return new Operand<double>(
+                    convertOperand<double>(this) % convertOperand<double>(rhs)
+                );
             default:
                 throw std::exception();
         }
-        return new Operand<T>(ss.str());
     }
 
     std::string const &toString(void) const
     {
-        return this->_value;
+        return std::string(this->_value);
+    }
+    T getValue(void)
+    {
+        return this._value;
     }
 };
 
@@ -164,6 +229,24 @@ template <>
 inline eOperandType Operand<double>::getType(void) const
 {
     return Double;
+}
+
+template <typename T>
+T convertOperand(IOperand const & op)
+{
+    switch (op.getPrecision())
+    {
+        case Int8:
+            return ((Operand<int8_t>)op).getValue();
+        case Int16:
+            return ((Operand<int16_t>)op).getValue();
+        case Int32:
+            return ((Operand<int32_t>)op).getValue();
+        case Float:
+            return ((Operand<float>)op).getValue();
+        case Double:
+            return ((Operand<double>)op).getValue();
+    }
 }
 
 #endif

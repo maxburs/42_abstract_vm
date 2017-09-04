@@ -114,7 +114,7 @@ void AbstractVM::_mod(void)
 void AbstractVM::_print(void)
 {
     if (this->_vector.back()->getType() != Int8)
-        throw std::exception("not a char"); //todo: specialize
+        throw std::exception(); //todo: specialize
 
     //todo: fix this
     std::cout << this->_vector.back()->toString() << "\n";

@@ -6,7 +6,7 @@ INCLUDE_DIR := include
 
 FLAGS := -g -Wall -Wextra -Werror -pedantic -std=c++11 -I ./$(INCLUDE_DIR)
 
-CC := clang++
+CC := g++
 
 SRC := \
 	main.cpp \
