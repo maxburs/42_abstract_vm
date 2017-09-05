@@ -4,25 +4,24 @@
 # include <ioperand.h> //IOperand, eOperandtype
 # include <string> //string
 # include <cstdint> //int8_t
-# include <sstream> //stringstream
 # include <convert.h> //toString()
 # include <algorithm> //max()
 # include <exception> //exception
 
 //needs to throw error on bad cast?
 template <typename T>
-T convertOperand(IOperand const & op);
+T convertOperand(IOperand const * op);
 
 template <typename T>
 class Operand : public IOperand
 {
 private:
     T _value;
-    Operand<T>(void) : _value("0") {}
+    std::string _test = "shit is fucked, yo";
+    Operand<T>(void) : _value(0) {}
 
 public:
     Operand<T>(Operand<T> const &target) : _value(target._value) {}
-    Operand<T>(std::string const &value) : _value(value) {}
     Operand<T>(T const value) : _value(value) {}
     virtual ~Operand<T>(void) {}
     Operand<T> &operator=(Operand<T> const &target)
@@ -48,23 +47,23 @@ public:
         {
             case Int8:
                 return new Operand<int8_t>(
-                    convertOperand<int8_t>(this) + convertOperand<int8_t>(rhs)
+                    convertOperand<int8_t>(this) + convertOperand<int8_t>(&rhs)
                 );
             case Int16:
                 return new Operand<int16_t>(
-                    convertOperand<int16_t>(this) + convertOperand<int16_t>(rhs)
+                    convertOperand<int16_t>(this) + convertOperand<int16_t>(&rhs)
                 );
             case Int32:
                 return new Operand<int32_t>(
-                    convertOperand<int32_t>(this) + convertOperand<int32_t>(rhs)
+                    convertOperand<int32_t>(this) + convertOperand<int32_t>(&rhs)
                 );
             case Float:
                 return new Operand<float>(
-                    convertOperand<float>(this) + convertOperand<float>(rhs)
+                    convertOperand<float>(this) + convertOperand<float>(&rhs)
                 );
             case Double:
                 return new Operand<double>(
-                    convertOperand<double>(this) + convertOperand<double>(rhs)
+                    convertOperand<double>(this) + convertOperand<double>(&rhs)
                 );
             default:
                 throw std::exception();
@@ -78,23 +77,23 @@ public:
         {
             case Int8:
                 return new Operand<int8_t>(
-                    convertOperand<int8_t>(this) - convertOperand<int8_t>(rhs)
+                    convertOperand<int8_t>(this) - convertOperand<int8_t>(&rhs)
                 );
             case Int16:
                 return new Operand<int16_t>(
-                    convertOperand<int16_t>(this) - convertOperand<int16_t>(rhs)
+                    convertOperand<int16_t>(this) - convertOperand<int16_t>(&rhs)
                 );
             case Int32:
                 return new Operand<int32_t>(
-                    convertOperand<int32_t>(this) - convertOperand<int32_t>(rhs)
+                    convertOperand<int32_t>(this) - convertOperand<int32_t>(&rhs)
                 );
             case Float:
                 return new Operand<float>(
-                    convertOperand<float>(this) - convertOperand<float>(rhs)
+                    convertOperand<float>(this) - convertOperand<float>(&rhs)
                 );
             case Double:
                 return new Operand<double>(
-                    convertOperand<double>(this) - convertOperand<double>(rhs)
+                    convertOperand<double>(this) - convertOperand<double>(&rhs)
                 );
             default:
                 throw std::exception();
@@ -108,23 +107,23 @@ public:
         {
             case Int8:
                 return new Operand<int8_t>(
-                    convertOperand<int8_t>(this) * convertOperand<int8_t>(rhs)
+                    convertOperand<int8_t>(this) * convertOperand<int8_t>(&rhs)
                 );
             case Int16:
                 return new Operand<int16_t>(
-                    convertOperand<int16_t>(this) * convertOperand<int16_t>(rhs)
+                    convertOperand<int16_t>(this) * convertOperand<int16_t>(&rhs)
                 );
             case Int32:
                 return new Operand<int32_t>(
-                    convertOperand<int32_t>(this) * convertOperand<int32_t>(rhs)
+                    convertOperand<int32_t>(this) * convertOperand<int32_t>(&rhs)
                 );
             case Float:
                 return new Operand<float>(
-                    convertOperand<float>(this) * convertOperand<float>(rhs)
+                    convertOperand<float>(this) * convertOperand<float>(&rhs)
                 );
             case Double:
                 return new Operand<double>(
-                    convertOperand<double>(this) * convertOperand<double>(rhs)
+                    convertOperand<double>(this) * convertOperand<double>(&rhs)
                 );
             default:
                 throw std::exception();
@@ -138,23 +137,23 @@ public:
         {
             case Int8:
                 return new Operand<int8_t>(
-                    convertOperand<int8_t>(this) / convertOperand<int8_t>(rhs)
+                    convertOperand<int8_t>(this) / convertOperand<int8_t>(&rhs)
                 );
             case Int16:
                 return new Operand<int16_t>(
-                    convertOperand<int16_t>(this) / convertOperand<int16_t>(rhs)
+                    convertOperand<int16_t>(this) / convertOperand<int16_t>(&rhs)
                 );
             case Int32:
                 return new Operand<int32_t>(
-                    convertOperand<int32_t>(this) / convertOperand<int32_t>(rhs)
+                    convertOperand<int32_t>(this) / convertOperand<int32_t>(&rhs)
                 );
             case Float:
                 return new Operand<float>(
-                    convertOperand<float>(this) / convertOperand<float>(rhs)
+                    convertOperand<float>(this) / convertOperand<float>(&rhs)
                 );
             case Double:
                 return new Operand<double>(
-                    convertOperand<double>(this) / convertOperand<double>(rhs)
+                    convertOperand<double>(this) / convertOperand<double>(&rhs)
                 );
             default:
                 throw std::exception();
@@ -168,24 +167,18 @@ public:
         {
             case Int8:
                 return new Operand<int8_t>(
-                    convertOperand<int8_t>(this) % convertOperand<int8_t>(rhs)
+                    convertOperand<int8_t>(this) % convertOperand<int8_t>(&rhs)
                 );
             case Int16:
                 return new Operand<int16_t>(
-                    convertOperand<int16_t>(this) % convertOperand<int16_t>(rhs)
+                    convertOperand<int16_t>(this) % convertOperand<int16_t>(&rhs)
                 );
             case Int32:
                 return new Operand<int32_t>(
-                    convertOperand<int32_t>(this) % convertOperand<int32_t>(rhs)
+                    convertOperand<int32_t>(this) % convertOperand<int32_t>(&rhs)
                 );
             case Float:
-                return new Operand<float>(
-                    convertOperand<float>(this) % convertOperand<float>(rhs)
-                );
             case Double:
-                return new Operand<double>(
-                    convertOperand<double>(this) % convertOperand<double>(rhs)
-                );
             default:
                 throw std::exception();
         }
@@ -193,11 +186,13 @@ public:
 
     std::string const &toString(void) const
     {
-        return std::string(this->_value);
+        //return std::string(this->_value);
+        //todo: fix this
+        return this->_test;
     }
     T getValue(void)
     {
-        return this._value;
+        return this->_value;
     }
 };
 
@@ -232,20 +227,22 @@ inline eOperandType Operand<double>::getType(void) const
 }
 
 template <typename T>
-T convertOperand(IOperand const & op)
+T convertOperand(IOperand const * op)
 {
-    switch (op.getPrecision())
+    switch (op->getPrecision())
     {
         case Int8:
-            return ((Operand<int8_t>)op).getValue();
+            return ((Operand<int8_t>*)op)->getValue();
         case Int16:
-            return ((Operand<int16_t>)op).getValue();
+            return ((Operand<int16_t>*)op)->getValue();
         case Int32:
-            return ((Operand<int32_t>)op).getValue();
+            return ((Operand<int32_t>*)op)->getValue();
         case Float:
-            return ((Operand<float>)op).getValue();
+            return ((Operand<float>*)op)->getValue();
         case Double:
-            return ((Operand<double>)op).getValue();
+            return ((Operand<double>*)op)->getValue();
+        default:
+            throw std::exception();
     }
 }
 

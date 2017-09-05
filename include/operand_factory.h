@@ -7,6 +7,16 @@
 class OperandFactory
 {
     private:
+        template <typename T>
+        Operand<T> const *createSpecific(std::string const value) const
+        {
+            std::stringstream ss(value);
+            T num;
+        
+            ss >> num;
+        
+            return new Operand<T>(num);
+        }
         IOperand const *createInt8(std::string const &value) const;
         IOperand const *createInt16(std::string const &value) const;
         IOperand const *createInt32(std::string const &value) const;
