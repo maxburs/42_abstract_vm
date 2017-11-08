@@ -17,12 +17,21 @@ class Operand : public IOperand
 {
 private:
     T _value;
-    std::string _test = "shit is fucked, yo";
-    Operand<T>(void) : _value(0) {}
+    std::string _string;
+    Operand<T>(void) :
+        _value(0),
+        _string("0")
+        {}
 
 public:
-    Operand<T>(Operand<T> const &target) : _value(target._value) {}
-    Operand<T>(T const value) : _value(value) {}
+    Operand<T>(Operand<T> const &target) :
+        _value(target._value),
+        _string(target._string)
+        {}
+    Operand<T>(T const value) :
+        _value(value),
+        _string(std::to_string(value))
+        {}
     virtual ~Operand<T>(void) {}
     Operand<T> &operator=(Operand<T> const &target)
     {
@@ -36,7 +45,7 @@ public:
     }
     eOperandType getType(void) const;
     T getValue(void) const {
-        return this._value;
+        return this->_value;
     }
 
     IOperand const * operator+(IOperand const & rhs) const
@@ -188,7 +197,7 @@ public:
     {
         //return std::string(this->_value);
         //todo: fix this
-        return this->_test;
+        return this->_string;
     }
     T getValue(void)
     {

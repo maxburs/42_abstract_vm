@@ -7,7 +7,7 @@
             "request": "launch",
             "program": "${workspaceRoot}/avm",
             "args": [],
-            "stopAtEntry": true,
+            "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
             "environment": [],
             "externalConsole": true,
