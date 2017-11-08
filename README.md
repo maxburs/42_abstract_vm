@@ -27,3 +27,7 @@ Z := [-]?[0..9]+.[0..9]+
 
 SEP := '\n'+
 ```
+
+todo: 
+* comments
+* better errors

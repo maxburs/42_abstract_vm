@@ -195,8 +195,6 @@ public:
 
     std::string const &toString(void) const
     {
-        //return std::string(this->_value);
-        //todo: fix this
         return this->_string;
     }
     T getValue(void)
