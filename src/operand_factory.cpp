@@ -7,18 +7,6 @@
 #include <string> //string, stod, stof
 #include <sstream> //stringstream
 
-
-// template <>
-// Operand<int8_t> const OperandFactory::*createSpecific(std::string const value) const
-// {
-//     std::stringstream ss(value);
-//     int32_t num;
-
-//     ss >> num;
-
-//     return new Operand<int8_t>(num);
-// }
-
 IOperand const *OperandFactory::createInt8(std::string const &value) const
 {
     return this->createSpecific<int8_t>(value);
