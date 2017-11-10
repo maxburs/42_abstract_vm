@@ -138,6 +138,7 @@ public:
                 throw std::exception();
         }
     }
+    //todo: division by zero
     IOperand const * operator/( IOperand const & rhs ) const
     {
         auto precision = std::max(this->getPrecision(), rhs.getPrecision());
@@ -168,6 +169,7 @@ public:
                 throw std::exception();
         }
     }
+    //todo: modulus by zero
     IOperand const * operator%( IOperand const & rhs ) const
     {
         auto precision = std::max(this->getPrecision(), rhs.getPrecision());

@@ -7,31 +7,6 @@
 #include <map> //map
 #include <regex>
 
-/* no longer being used //todo: remove
-
-std::string const Parser::_instructions_s[] = {
-    "push",
-    "pop",
-    "dump",
-    "assert",
-    "add",
-    "sub",
-    "mul",
-    "div",
-    "mod",
-    "print",
-    "exit"
-};
-
-std::string const Parser::_types_s[] = {
-    "int8",
-    "int16",
-    "int32",
-    "float",
-    "double"
-};
-*/
-
 std::unordered_map<std::string, eInstructionType> const Parser::_instructions = {
     {"push", Push},
     {"pop", Pop},
@@ -100,21 +75,36 @@ Parser::~Parser(void)
 
 eInstructionType Parser::nextInstructionType(void)
 {
-    std::string instr;
-    std::size_t split;
+    std::string line;
     
-    std::getline(std::cin, instr);
+    do {
+        std::getline(std::cin, line);
+    } while (
+        //skips comments
+        line[0] == ';'
+        && line[1] != ';'
+    );
 
-    split = instr.find(" ");
+    return this->parseLine(line);
+}
+
+eInstructionType Parser::parseLine(std::string line) {
+    
+    auto split = line.find(" ");
+    std::string instruction;
 
     //if a space was found split the instruction
     if (split != std::string::npos)
     {
-        this->_createOperand(instr.substr(split + 1));
-        instr = instr.substr(0, split);
+        this->_createOperand(line.substr(split + 1));
+        instruction = line.substr(0, split);
+    }
+    else
+    {
+        instruction = line;
     }
 
-    auto got = Parser::_instructions.find(instr);
+    auto got = Parser::_instructions.find(instruction);
     if (got == Parser::_instructions.end())
         throw std::exception(); //todo: make exception an apropriate type
 

@@ -36,6 +36,7 @@ private:
     IOperand const *_operand;
 
     void _createOperand(std::string operand);
+    eInstructionType parseLine(std::string);
 
 public:
     Parser(void);
