@@ -6,6 +6,7 @@
 #include <string> //string, getline(), size_t
 #include <map> //map
 #include <regex>
+#include <iostream> //cin
 
 std::unordered_map<std::string, eInstructionType> const Parser::_instructions = {
     {"push", Push},
@@ -32,7 +33,10 @@ std::unordered_map<std::string, eOperandType> const Parser::_types = {
 OperandFactory const Parser::_operandFactory = {};
 
 //can cause double free
-Parser::Parser(Parser const &target) : _operand(target._operand) {}
+Parser::Parser(Parser const &target) :
+    _operand(target._operand),
+    _instr_input(std::cin)
+    {}
 
 //this can too
 Parser &Parser::operator=(Parser const &target)
@@ -66,7 +70,11 @@ void Parser::_createOperand(std::string operand)
         operand.substr(split + 1, operand.length() - split - 2) );
 }
 
-Parser::Parser(void) : _operand(nullptr) {}
+Parser::Parser(std::istream &instr_input) :
+    _operand(nullptr),
+    _instr_input(instr_input)
+    {}
+Parser::Parser(void) : Parser(std::cin) {}
 
 Parser::~Parser(void)
 {
@@ -78,7 +86,7 @@ eInstructionType Parser::nextInstructionType(void)
     std::string line;
     
     do {
-        std::getline(std::cin, line);
+        std::getline(this->_instr_input, line);
     } while (
         //skips comments
         line[0] == ';'

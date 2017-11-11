@@ -129,10 +129,16 @@ void AbstractVM::_dump(void)
     }
 }
 
-AbstractVM::AbstractVM(void) : _vector() {}
-//todo: fix constructors
+AbstractVM::AbstractVM(std::istream &instr_input) :
+    _vector(),
+    _parser(instr_input)
+    {}
+
+AbstractVM::AbstractVM(void) : AbstractVM(std::cin) {}
+
 AbstractVM::AbstractVM(AbstractVM const &target) :
-    _vector(target._vector) {}
+    _vector(target._vector)
+    {}
 
 AbstractVM::~AbstractVM(void)
 {

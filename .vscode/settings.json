@@ -44,7 +44,8 @@
         "iostream": "cpp",
         "istream": "cpp",
         "ostream": "cpp",
-        "streambuf": "cpp"
+        "streambuf": "cpp",
+        "fstream": "cpp"
     },
     "C_Cpp.intelliSenseEngine": "Default"
 }

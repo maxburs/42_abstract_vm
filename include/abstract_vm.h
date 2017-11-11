@@ -4,6 +4,7 @@
 # include <vector> //vector
 # include <ioperand.h> //IOperand
 # include <parser.h> //Parser
+# include <iostream> //istream, cin
 # include <operand_factory.h> //OperandFactory
 
 class AbstractVM
@@ -26,10 +27,12 @@ private:
     void _print(void);
 
 public:
+    AbstractVM(std::istream &instr_input);
     AbstractVM(void);
     AbstractVM(AbstractVM const &target);
     virtual ~AbstractVM(void);
     AbstractVM &operator=(AbstractVM const &target);
+
 
     void run(void);
 };

@@ -5,6 +5,7 @@
 # include <operand_factory.h> //OperandFactory
 # include <string> //string
 # include <unordered_map> //map
+# include <istream> //istream
 
 enum eInstructionType
 {
@@ -34,11 +35,13 @@ private:
 
     static OperandFactory const _operandFactory;
     IOperand const *_operand;
+    std::istream &_instr_input;
 
     void _createOperand(std::string operand);
     eInstructionType parseLine(std::string);
 
 public:
+    Parser(std::istream &instr_input);
     Parser(void);
     ~Parser(void);
 
