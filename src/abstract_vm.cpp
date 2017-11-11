@@ -38,6 +38,8 @@ void AbstractVM::_assert(void)
 {
     IOperand const *op = this->_parser.getOperand();
 
+    std::cout << *op << *this->_vector.front() << "\n";
+
     if (this->_vector.front()->toString() != op->toString())
     {
         delete op;
@@ -122,9 +124,11 @@ void AbstractVM::_print(void)
 
 void AbstractVM::_dump(void)
 {
-    auto j = this->_vector.end();
-    for (auto i = this->_vector.begin(); i != j; i++)
+    auto j = this->_vector.begin();
+    auto i = this->_vector.end();
+    while (i != j)
     {
+        i--;
         std::cout << **i << "\n";
     }
 }

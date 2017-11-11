@@ -31,3 +31,4 @@ SEP := '\n'+
 todo: 
 * comments
 * better errors
+* get rid of trailing zeros when printing floats
