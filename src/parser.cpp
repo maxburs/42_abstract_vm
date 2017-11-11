@@ -32,17 +32,15 @@ std::unordered_map<std::string, eOperandType> const Parser::_types = {
 
 OperandFactory const Parser::_operandFactory = {};
 
-//can cause double free
 Parser::Parser(Parser const &target) :
-    _operand(target._operand),
-    _instr_input(std::cin)
+    _operand(nullptr),
+    _instr_input(target._instr_input)
     {}
 
-//this can too
+//does nothing
 Parser &Parser::operator=(Parser const &target)
 {
-    this->_operand = target._operand;
-    
+    (void)target;
     return *this;
 }
 

@@ -25,8 +25,7 @@ enum eInstructionType
 class Parser
 {
 private:
-    Parser(Parser const &target); //can cause double free
-    Parser &operator=(Parser const &target); //this can too
+    Parser &operator=(Parser const &target);
 
     static std::string const _instructions_s[];
     static std::string const _types_s[];
@@ -41,6 +40,7 @@ private:
     eInstructionType parseLine(std::string);
 
 public:
+    Parser(Parser const &target);
     Parser(std::istream &instr_input);
     Parser(void);
     ~Parser(void);

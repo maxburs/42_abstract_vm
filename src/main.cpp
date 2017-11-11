@@ -18,7 +18,7 @@ int main(int argc, char** argv)
         file.close();
     }
     else {
-        AbstractVM vm(std::cin);
+        AbstractVM vm;
 
         vm.run();
     }

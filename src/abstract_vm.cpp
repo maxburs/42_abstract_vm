@@ -38,10 +38,13 @@ void AbstractVM::_assert(void)
 {
     IOperand const *op = this->_parser.getOperand();
 
-    std::cout << *op << *this->_vector.front() << "\n";
+    std::cout << *this->_vector.back() << "\n";
+    std::cout << *op << "\n";
 
-    if (this->_vector.front()->toString() != op->toString())
-    {
+    if (
+        this->_vector.empty()
+        || this->_vector.back()->toString() != op->toString()
+    ) {
         delete op;
         throw std::exception(); //todo: specialize
     }
@@ -135,13 +138,21 @@ void AbstractVM::_dump(void)
 
 AbstractVM::AbstractVM(std::istream &instr_input) :
     _vector(),
-    _parser(instr_input)
+    _parser(instr_input),
+    _alternate_input(true)
     {}
 
-AbstractVM::AbstractVM(void) : AbstractVM(std::cin) {}
+
+AbstractVM::AbstractVM(void) :
+    _vector(),
+    _parser(std::cin),
+    _alternate_input(false)
+    {}
 
 AbstractVM::AbstractVM(AbstractVM const &target) :
-    _vector(target._vector)
+    _vector(target._vector),
+    _parser(target._parser),
+    _alternate_input(target._alternate_input)
     {}
 
 AbstractVM::~AbstractVM(void)
@@ -153,7 +164,7 @@ AbstractVM::~AbstractVM(void)
 
 AbstractVM &AbstractVM::operator=(AbstractVM const &target)
 {
-    this->_vector = target._vector;;
+    this->_vector = target._vector;
 
     return *this;
 }
