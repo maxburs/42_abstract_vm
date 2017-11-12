@@ -34,7 +34,8 @@ OperandFactory const Parser::_operandFactory = {};
 
 Parser::Parser(Parser const &target) :
     _operand(nullptr),
-    _instr_input(target._instr_input)
+    _instr_input(target._instr_input),
+    _alternate_input(target._alternate_input)
     {}
 
 //does nothing
@@ -70,9 +71,15 @@ void Parser::_createOperand(std::string operand)
 
 Parser::Parser(std::istream &instr_input) :
     _operand(nullptr),
-    _instr_input(instr_input)
+    _instr_input(instr_input),
+    _alternate_input(true)
     {}
-Parser::Parser(void) : Parser(std::cin) {}
+
+Parser::Parser(void) :
+    _operand(nullptr),
+    _instr_input(std::cin),
+    _alternate_input(false)
+    {}
 
 Parser::~Parser(void)
 {

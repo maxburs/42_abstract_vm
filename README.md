@@ -28,7 +28,6 @@ Z := [-]?[0..9]+.[0..9]+
 SEP := '\n'+
 ```
 
-todo: 
-* comments
+todo:
 * better errors
 * get rid of trailing zeros when printing floats

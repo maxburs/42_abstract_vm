@@ -12,7 +12,6 @@ class AbstractVM
 private:
     std::vector<IOperand const *> _vector;
     Parser _parser;
-    bool const _alternate_input;
 
     static void (AbstractVM::* const _instructions[])(void);
 

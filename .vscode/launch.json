@@ -6,7 +6,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceRoot}/avm",
-            "args": ["./tests/sample.avm"],
+            "args": ["./tests/1.avm"],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
             "environment": [],

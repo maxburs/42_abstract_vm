@@ -138,21 +138,18 @@ void AbstractVM::_dump(void)
 
 AbstractVM::AbstractVM(std::istream &instr_input) :
     _vector(),
-    _parser(instr_input),
-    _alternate_input(true)
+    _parser(instr_input)
     {}
 
 
 AbstractVM::AbstractVM(void) :
     _vector(),
-    _parser(std::cin),
-    _alternate_input(false)
+    _parser()
     {}
 
 AbstractVM::AbstractVM(AbstractVM const &target) :
     _vector(target._vector),
-    _parser(target._parser),
-    _alternate_input(target._alternate_input)
+    _parser(target._parser)
     {}
 
 AbstractVM::~AbstractVM(void)
