@@ -2,6 +2,7 @@
 
 #include <operand_factory.h> //OperandFactory
 #include <ioperand.h> //eOperandType
+#include <vm_exceptions.h>
 
 #include <string> //string, getline(), size_t
 #include <map> //map
@@ -35,8 +36,9 @@ OperandFactory const Parser::_operandFactory = {};
 Parser::Parser(Parser const &target) :
     _operand(nullptr),
     _instr_input(target._instr_input),
-    _alternate_input(target._alternate_input)
-    {}
+    _alternate_input(target._alternate_input),
+    _line_number(target._line_number)
+{}
 
 //does nothing
 Parser &Parser::operator=(Parser const &target)
@@ -72,14 +74,16 @@ void Parser::_createOperand(std::string operand)
 Parser::Parser(std::istream &instr_input) :
     _operand(nullptr),
     _instr_input(instr_input),
-    _alternate_input(true)
-    {}
+    _alternate_input(true),
+    _line_number(0)
+{}
 
 Parser::Parser(void) :
     _operand(nullptr),
     _instr_input(std::cin),
-    _alternate_input(false)
-    {}
+    _alternate_input(false),
+    _line_number(0)
+{}
 
 Parser::~Parser(void)
 {
@@ -92,10 +96,10 @@ eInstructionType Parser::nextInstructionType(void)
     
     do {
         std::getline(this->_instr_input, line);
+        this->_line_number++;
     } while (
         //skips comments
         line[0] == ';'
-        && line[1] != ';'
     );
 
     return this->parseLine(line);
@@ -119,7 +123,7 @@ eInstructionType Parser::parseLine(std::string line) {
 
     auto got = Parser::_instructions.find(instruction);
     if (got == Parser::_instructions.end())
-        throw std::exception(); //todo: make exception an apropriate type
+        throw UnknownInstructionException();
 
     return got->second;
 }
@@ -130,4 +134,8 @@ IOperand const *Parser::getOperand(void)
 
     this->_operand = nullptr;
     return return_me;
+}
+
+int Parser::getLineNumber(void) {
+    return this->_line_number;
 }

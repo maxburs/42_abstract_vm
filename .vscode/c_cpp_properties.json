@@ -35,6 +35,7 @@
                 "/usr/include",
                 "/usr/include/c++/5",
                 "/usr/include/x86_64-linux-gnu/c++/5",
+                "${workspaceRoot}/include",
                 "${workspaceRoot}/include"
             ],
             "browse": {

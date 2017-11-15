@@ -36,6 +36,7 @@ private:
     IOperand const *_operand;
     std::istream &_instr_input;
     bool const _alternate_input;
+    int _line_number;
 
     void _createOperand(std::string operand);
     eInstructionType parseLine(std::string);
@@ -49,6 +50,7 @@ public:
     eInstructionType nextInstructionType(void);
 
     IOperand const *getOperand(void);
+    int getLineNumber(void);
 };
 
 #endif

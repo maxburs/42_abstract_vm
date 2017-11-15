@@ -33,8 +33,8 @@ public:
     virtual ~AbstractVM(void);
     AbstractVM &operator=(AbstractVM const &target);
 
-
-    void run(void);
+    // returns 1 if an error is found
+    int run(void);
 };
 
 #endif

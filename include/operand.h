@@ -21,17 +21,17 @@ private:
     Operand<T>(void) :
         _value(0),
         _string("0")
-        {}
+    {}
 
 public:
     Operand<T>(Operand<T> const &target) :
         _value(target._value),
         _string(target._string)
-        {}
+    {}
     Operand<T>(T const value) :
         _value(value),
         _string(std::to_string(value))
-        {}
+    {}
     virtual ~Operand<T>(void) {}
     Operand<T> &operator=(Operand<T> const &target)
     {
