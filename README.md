@@ -34,10 +34,6 @@ todo:
 * should not treat exit as end of input
 
 missing error types: 
-• The assembly program includes one or several lexical errors or syntactic errors.
-• An instruction is unknown
 • Overflow on a value or the result of an operation
 • Underflow on a value or the result of an operation
-• Division/modulo by 0
-• The program doesn’t have an exit instruction
-is executed.
+• The program doesn’t have an exit instruction is executed.

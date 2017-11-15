@@ -73,13 +73,15 @@ Parser::Parser(std::istream &instr_input) :
     _operand(nullptr),
     _instr_input(instr_input),
     _alternate_input(true),
-    _line_number(0) {}
+    _line_number(0)
+{}
 
 Parser::Parser(void) :
     _operand(nullptr),
     _instr_input(std::cin),
     _alternate_input(false),
-    _line_number(0) {}
+    _line_number(0)
+{}
 
 Parser::~Parser(void) {
     delete this->_operand;
