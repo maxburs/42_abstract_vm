@@ -6,11 +6,25 @@
 # include <cstdint> //int8_t
 # include <convert.h> //toString()
 # include <algorithm> //max()
-# include <exception> //exception
+# include <vm_exceptions.h>
 
-//needs to throw error on bad cast?
 template <typename T>
 T convertOperand(IOperand const * op);
+
+template <typename T>
+IOperand const *add(IOperand const &left, IOperand const &right);
+
+template <typename T>
+IOperand const *subtract(IOperand const &left, IOperand const &right);
+
+template <typename T>
+IOperand const *multiply(IOperand const &left, IOperand const &right);
+
+template <typename T>
+IOperand const *divide(IOperand const &left, IOperand const &right);
+
+template <typename T>
+IOperand const *modulus(IOperand const &left, IOperand const &right);
 
 template <typename T>
 class Operand : public IOperand
@@ -33,8 +47,7 @@ public:
         _string(std::to_string(value))
     {}
     virtual ~Operand<T>(void) {}
-    Operand<T> &operator=(Operand<T> const &target)
-    {
+    Operand<T> &operator=(Operand<T> const &target) {
         this->_value = target._value;
         return *this;
     }
@@ -48,190 +61,126 @@ public:
         return this->_value;
     }
 
-    IOperand const * operator+(IOperand const & rhs) const
-    {
+    IOperand const * operator+(IOperand const & rhs) const {
         auto precision = std::max(this->getPrecision(), rhs.getPrecision());
 
-        switch (precision)
-        {
+        switch (precision) {
             case Int8:
-                return new Operand<int8_t>(
-                    convertOperand<int8_t>(this) + convertOperand<int8_t>(&rhs)
-                );
+                return add<int8_t>(*this, rhs);
             case Int16:
-                return new Operand<int16_t>(
-                    convertOperand<int16_t>(this) + convertOperand<int16_t>(&rhs)
-                );
+                return add<int16_t>(*this, rhs);
             case Int32:
-                return new Operand<int32_t>(
-                    convertOperand<int32_t>(this) + convertOperand<int32_t>(&rhs)
-                );
+                return add<int32_t>(*this, rhs);
             case Float:
-                return new Operand<float>(
-                    convertOperand<float>(this) + convertOperand<float>(&rhs)
-                );
+                return add<float>(*this, rhs);
             case Double:
-                return new Operand<double>(
-                    convertOperand<double>(this) + convertOperand<double>(&rhs)
-                );
+                return add<double>(*this, rhs);
             default:
-                throw std::exception();
+                throw CorruptIOperandException();
         }
     }
-    IOperand const * operator-(IOperand const & rhs) const
-    {
+    IOperand const * operator-(IOperand const & rhs) const {
         auto precision = std::max(this->getPrecision(), rhs.getPrecision());
 
-        switch (precision)
-        {
+        switch (precision) {
             case Int8:
-                return new Operand<int8_t>(
-                    convertOperand<int8_t>(this) - convertOperand<int8_t>(&rhs)
-                );
+                return subtract<int8_t>(*this, rhs);
             case Int16:
-                return new Operand<int16_t>(
-                    convertOperand<int16_t>(this) - convertOperand<int16_t>(&rhs)
-                );
+                return subtract<int16_t>(*this, rhs);
             case Int32:
-                return new Operand<int32_t>(
-                    convertOperand<int32_t>(this) - convertOperand<int32_t>(&rhs)
-                );
+                return subtract<int32_t>(*this, rhs);
             case Float:
-                return new Operand<float>(
-                    convertOperand<float>(this) - convertOperand<float>(&rhs)
-                );
+                return subtract<float>(*this, rhs);
             case Double:
-                return new Operand<double>(
-                    convertOperand<double>(this) - convertOperand<double>(&rhs)
-                );
+                return subtract<double>(*this, rhs);
             default:
-                throw std::exception();
+                throw CorruptIOperandException();
         }
     }
-    IOperand const * operator*( IOperand const & rhs ) const
-    {
+    IOperand const * operator*( IOperand const & rhs ) const {
         auto precision = std::max(this->getPrecision(), rhs.getPrecision());
 
-        switch (precision)
-        {
+        switch (precision) {
             case Int8:
-                return new Operand<int8_t>(
-                    convertOperand<int8_t>(this) * convertOperand<int8_t>(&rhs)
-                );
+                return multiply<int8_t>(*this, rhs);
             case Int16:
-                return new Operand<int16_t>(
-                    convertOperand<int16_t>(this) * convertOperand<int16_t>(&rhs)
-                );
+                return multiply<int16_t>(*this, rhs);
             case Int32:
-                return new Operand<int32_t>(
-                    convertOperand<int32_t>(this) * convertOperand<int32_t>(&rhs)
-                );
+                return multiply<int32_t>(*this, rhs);
             case Float:
-                return new Operand<float>(
-                    convertOperand<float>(this) * convertOperand<float>(&rhs)
-                );
+                return multiply<float>(*this, rhs);
             case Double:
-                return new Operand<double>(
-                    convertOperand<double>(this) * convertOperand<double>(&rhs)
-                );
+                return multiply<double>(*this, rhs);
             default:
-                throw std::exception();
+                throw CorruptIOperandException();
         }
     }
-    //todo: division by zero
-    IOperand const * operator/( IOperand const & rhs ) const
-    {
+    IOperand const * operator/( IOperand const & rhs ) const {
         auto precision = std::max(this->getPrecision(), rhs.getPrecision());
 
-        switch (precision)
-        {
+        switch (precision) {
             case Int8:
-                return new Operand<int8_t>(
-                    convertOperand<int8_t>(this) / convertOperand<int8_t>(&rhs)
-                );
+                return divide<int8_t>(*this, rhs);
             case Int16:
-                return new Operand<int16_t>(
-                    convertOperand<int16_t>(this) / convertOperand<int16_t>(&rhs)
-                );
+                return divide<int16_t>(*this, rhs);
             case Int32:
-                return new Operand<int32_t>(
-                    convertOperand<int32_t>(this) / convertOperand<int32_t>(&rhs)
-                );
+                return divide<int32_t>(*this, rhs);
             case Float:
-                return new Operand<float>(
-                    convertOperand<float>(this) / convertOperand<float>(&rhs)
-                );
+                return divide<float>(*this, rhs);
             case Double:
-                return new Operand<double>(
-                    convertOperand<double>(this) / convertOperand<double>(&rhs)
-                );
+                return divide<double>(*this, rhs);
             default:
-                throw std::exception();
+                throw CorruptIOperandException();
         }
     }
-    //todo: modulus by zero
-    IOperand const * operator%( IOperand const & rhs ) const
-    {
+    IOperand const * operator%( IOperand const & rhs ) const {
         auto precision = std::max(this->getPrecision(), rhs.getPrecision());
 
-        switch (precision)
-        {
+        switch (precision) {
             case Int8:
-                return new Operand<int8_t>(
-                    convertOperand<int8_t>(this) % convertOperand<int8_t>(&rhs)
-                );
+                return modulus<int8_t>(*this, rhs);
             case Int16:
-                return new Operand<int16_t>(
-                    convertOperand<int16_t>(this) % convertOperand<int16_t>(&rhs)
-                );
+                return modulus<int16_t>(*this, rhs);
             case Int32:
-                return new Operand<int32_t>(
-                    convertOperand<int32_t>(this) % convertOperand<int32_t>(&rhs)
-                );
+                return modulus<int32_t>(*this, rhs);
             case Float:
             case Double:
+                throw ModulusWithFloatException();
             default:
-                throw std::exception();
+                throw CorruptIOperandException();
         }
     }
 
-    std::string const &toString(void) const
-    {
+    std::string const &toString(void) const {
         return this->_string;
     }
-    T getValue(void)
-    {
+    T getValue(void) {
         return this->_value;
     }
 };
 
 template <>
-inline eOperandType Operand<int8_t>::getType(void) const
-{
+inline eOperandType Operand<int8_t>::getType(void) const {
     return Int8;
 }
 
 template <>
-inline eOperandType Operand<int16_t>::getType(void) const
-{
+inline eOperandType Operand<int16_t>::getType(void) const {
     return Int16;
 }
 
 template <>
-inline eOperandType Operand<int32_t>::getType(void) const
-{
+inline eOperandType Operand<int32_t>::getType(void) const {
     return Int32;
 }
 
 template <>
-inline eOperandType Operand<float>::getType(void) const
-{
+inline eOperandType Operand<float>::getType(void) const {
     return Float;
 }
 
 template <>
-inline eOperandType Operand<double>::getType(void) const
-{
+inline eOperandType Operand<double>::getType(void) const {
     return Double;
 }
 
@@ -251,8 +200,51 @@ T convertOperand(IOperand const * op)
         case Double:
             return ((Operand<double>*)op)->getValue();
         default:
-            throw std::exception();
+            throw CorruptIOperandException();
     }
+}
+
+template <typename T>
+IOperand const *multiply(IOperand const &left, IOperand const &right) {
+    return new Operand<T>(
+        convertOperand<T>(&left) * convertOperand<T>(&right)
+    );
+}
+
+template <typename T>
+IOperand const *divide(IOperand const &left, IOperand const &right) {
+    T right_val = convertOperand<T>(&right);
+
+    if (right_val == 0)
+        throw OperationByZeroException("Divide");
+
+    return new Operand<T>(convertOperand<T>(&left) / right_val);
+}
+
+template <typename T>
+IOperand const *add(IOperand const &left, IOperand const &right) {
+    return new Operand<T>(
+        convertOperand<T>(&left) + convertOperand<T>(&right)
+    );
+}
+
+template <typename T>
+IOperand const *subtract(IOperand const &left, IOperand const &right) {
+    return new Operand<T>(
+        convertOperand<T>(&left) - convertOperand<T>(&right)
+    );
+}
+
+template <typename T>
+IOperand const *modulus(IOperand const &left, IOperand const &right) {
+    T right_val = convertOperand<T>(&right);
+
+    if (right_val == 0)
+        throw OperationByZeroException("Modulus");
+
+    return new Operand<T>(
+        convertOperand<T>(&left) % right_val
+    );
 }
 
 #endif

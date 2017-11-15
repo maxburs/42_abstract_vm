@@ -177,7 +177,7 @@ int AbstractVM::run(void)
         }
     } catch(VMException &e) {
         //toto: why do i need to print the space before line??
-        std::cout << " Line " + this->_parser.getLineNumber()
+        std::cerr << " Line " + this->_parser.getLineNumber()
             << " : Error: " << e.what() << "\n";
         return 1;
     }

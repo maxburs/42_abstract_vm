@@ -63,4 +63,28 @@ public:
     ) {}
 };
 
+class OperationByZeroException : public VMException {
+public:
+    OperationByZeroException(
+        std::string operation
+    ) : VMException(
+        operation + " by zero"
+    ) {}
+
+};
+
+class ModulusWithFloatException : public VMException {
+public:
+    ModulusWithFloatException() : VMException (
+        "Cannot perform modulus operation with floating point numbers"
+    ) {}
+};
+
+class CorruptIOperandException : public VMException {
+public:
+    CorruptIOperandException() : VMException (
+        "Invalid ioperand type, possible memory corruption or pointer error"
+    ) {}
+};
+
 #endif
