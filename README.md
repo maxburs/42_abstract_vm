@@ -29,9 +29,6 @@ SEP := '\n'+
 ```
 
 todo:
-* better errors
 * get rid of trailing zeros when printing floats
-* should not treat exit as end of input
+* should read everything from the standard input and then execute it
 
-missing error types:
-* The program doesn’t have an exit instruction is executed.
