@@ -108,4 +108,11 @@ public:
     ) {}
 };
 
+class MissingValueException : public VMException {
+public:
+    MissingValueException(void) : VMException (
+        "Operation requires value"
+    ) {}
+};
+
 #endif

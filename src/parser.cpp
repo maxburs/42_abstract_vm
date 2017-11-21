@@ -113,6 +113,16 @@ eInstructionType Parser::parseLine(std::string line) {
     if (got == Parser::_instructions.end())
         throw UnknownInstructionException();
 
+    if (
+        (
+            got->second == Assert
+            || got->second == Push
+        )
+        && this->_operand == nullptr
+    ) {
+        throw MissingValueException();
+    }
+
     return got->second;
 }
 

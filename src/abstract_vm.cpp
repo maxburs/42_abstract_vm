@@ -9,7 +9,6 @@
 #include <algorithm> //for_each
 #include <vector> //vector
 #include <iostream> //cout cerr
-#include <exception>
 
 void (AbstractVM::* const AbstractVM::_instructions[])(void) = {
     &AbstractVM::_push,
@@ -126,7 +125,7 @@ void AbstractVM::_mod(void) {
 
 void AbstractVM::_print(void) {
     if (this->_vector.back()->getType() != Int8)
-        throw PrintException(); //todo: specialize
+        throw PrintException();
 
     //todo: fix this
     std::cout << this->_vector.back()->toString() << "\n";

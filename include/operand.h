@@ -1,13 +1,13 @@
 #ifndef INT8_H_
 # define INT8_H_
 
-# include <ioperand.h> //IOperand, eOperandtype
-# include <string> //string
-# include <cstdint> //int8_t
-# include <convert.h> //toString()
-# include <algorithm> //max()
+# include <ioperand.h> // IOperand, eOperandtype
+# include <string> // string
+# include <cstdint> // int8_t
+# include <convert.h> // toString()
+# include <algorithm> // max()
 # include <vm_exceptions.h>
-# include <limits> //max(), min(), is_integer, is_singed
+# include <limits> // max(), min(), is_integer, is_singed
 
 template <typename T>
 T convertOperand(IOperand const * op);
@@ -45,7 +45,7 @@ public:
     {}
     Operand<T>(T const value) :
         _value(value),
-        _string(std::to_string(value))
+        _string(to_string(value))
     {}
     virtual ~Operand<T>(void) {}
     Operand<T> &operator=(Operand<T> const &target) {

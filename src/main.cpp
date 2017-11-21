@@ -14,6 +14,11 @@ int main(int argc, char** argv)
         // todo: handle bad filename error
         file.open(argv[1]);
 
+        if (file.fail()) {
+            std::cerr << "Error : opening file\n";
+            return 1;
+        }
+
         AbstractVM vm(file);
 
         err = vm.run();
@@ -33,8 +38,8 @@ int main(int argc, char** argv)
         if (
             std::cin.eof() == false
             && line != ";;"
-        ) {
-            std::cerr << "Error reading instructions\n";
+        ) { 
+            std::cerr << "Error : reading instructions\n";
             return 1;
         }
 
