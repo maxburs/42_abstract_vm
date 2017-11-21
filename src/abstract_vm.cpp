@@ -143,17 +143,19 @@ void AbstractVM::_dump(void) {
 
 AbstractVM::AbstractVM(std::istream &instr_input) :
     _vector(),
-    _parser(instr_input) {}
+    _parser(instr_input)
+{}
 
 
 AbstractVM::AbstractVM(void) :
     _vector(),
-    _parser() {}
+    _parser()
+{}
 
 AbstractVM::AbstractVM(AbstractVM const &target) :
     _vector(target._vector),
     _parser(target._parser)
-    {}
+{}
 
 AbstractVM::~AbstractVM(void) {
     for_each(this->_vector.begin(), this->_vector.end(), [](IOperand const *op) {

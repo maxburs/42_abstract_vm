@@ -1,6 +1,8 @@
 #include <iostream>
 #include <abstract_vm.h>
 #include <fstream> //ifstream
+#include <string> //string, getline
+#include <sstream> //stringstream
 
 int main(int argc, char** argv)
 {
@@ -18,7 +20,19 @@ int main(int argc, char** argv)
 
         file.close();
     } else {
-        AbstractVM vm;
+        std::strinstream instructions;
+        std::string line;
+
+        while (std::getline(line, std::cin)) {
+            instructions << line;
+        }
+
+        if (std::cin.eof() == false) {
+            std::cerr << "Error reading instructions\n";
+            return 1;
+        }
+
+        AbstractVM vm(instructions);
 
         err = vm.run();
     }
