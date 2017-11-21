@@ -34,6 +34,6 @@ todo:
 * should not treat exit as end of input
 
 missing error types: 
-• Overflow on a value or the result of an operation
-• Underflow on a value or the result of an operation
-• The program doesn’t have an exit instruction is executed.
+* Overflow on a value or the result of an operation
+* Underflow on a value or the result of an operation
+* The program doesn’t have an exit instruction is executed.

@@ -51,14 +51,14 @@ public:
 // todo: give more information in error
 class PrintException : public VMException {
 public:
-    PrintException() : VMException(
+    PrintException(void) : VMException(
         "Operand on the top of the stack is not of type int8"
     ) {}
 };
 
 class UnknownInstructionException : public VMException {
 public:
-    UnknownInstructionException() : VMException (
+    UnknownInstructionException(void) : VMException (
         "an instruction is unknown"
     ) {}
 };
@@ -75,15 +75,29 @@ public:
 
 class ModulusWithFloatException : public VMException {
 public:
-    ModulusWithFloatException() : VMException (
+    ModulusWithFloatException(void) : VMException (
         "Cannot perform modulus operation with floating point numbers"
     ) {}
 };
 
 class CorruptIOperandException : public VMException {
 public:
-    CorruptIOperandException() : VMException (
+    CorruptIOperandException(void) : VMException (
         "Invalid ioperand type, possible memory corruption or pointer error"
+    ) {}
+};
+
+class OverflowException : public VMException {
+public:
+    OverflowException(void) : VMException (
+        "Overflow on a value or the result of an operation"
+    ) {}
+};
+
+class UnderflowException : public VMException {
+public:
+    UnderflowException(void) : VMException (
+        "Underflow on a value or the result of an operation"
     ) {}
 };
 

@@ -7,6 +7,7 @@
 # include <convert.h> //toString()
 # include <algorithm> //max()
 # include <vm_exceptions.h>
+# include <limits>
 
 template <typename T>
 T convertOperand(IOperand const * op);
@@ -206,8 +207,29 @@ T convertOperand(IOperand const * op)
 
 template <typename T>
 IOperand const *multiply(IOperand const &left, IOperand const &right) {
+    T l = convertOperand<T>(&left);
+    T r = convertOperand<T>(&right);
+
+    bool left_positive =  l > 0;
+    bool right_positive = r > 0;
+
+    if (// if type can overflow
+        std::numeric_limits<T>::is_signed
+        && std::numeric_limits<T>::is_integer
+    ) {
+        if(left_positive == right_positive) {
+            // max < r * l == true
+            if (std::numeric_limits<T>::max() / l < r)
+                throw OverflowException();
+        } else {
+            // min > r * l == true
+            if (std::numeric_limits<T>::min() / l > r)
+                throw UnderflowException();
+        }
+    }
+
     return new Operand<T>(
-        convertOperand<T>(&left) * convertOperand<T>(&right)
+        l * r
     );
 }
 
@@ -223,15 +245,51 @@ IOperand const *divide(IOperand const &left, IOperand const &right) {
 
 template <typename T>
 IOperand const *add(IOperand const &left, IOperand const &right) {
+    T l = convertOperand<T>(&left);
+    T r = convertOperand<T>(&right);
+
+    if (// if type can overflow
+        std::numeric_limits<T>::is_signed
+        && std::numeric_limits<T>::is_integer
+    ) {
+        if (r > 0) {
+            // max < l + r == true
+            if (std::numeric_limits<T>::max() - r < l)
+                throw OverflowException();
+        } else {
+            // min > l + r == true
+            if (std::numeric_limits<T>::min() - r > l)
+                throw UnderflowException();
+        }
+    }
+
     return new Operand<T>(
-        convertOperand<T>(&left) + convertOperand<T>(&right)
+        l + r
     );
 }
 
 template <typename T>
 IOperand const *subtract(IOperand const &left, IOperand const &right) {
+    T l = convertOperand<T>(&left);
+    T r = convertOperand<T>(&right);
+
+    if (// if type can overflow
+        std::numeric_limits<T>::is_signed
+        && std::numeric_limits<T>::is_integer
+    ) {
+        if (r > 0) {
+            // min > l - r == true
+            if (std::numeric_limits<T>::min() + r > l)
+                throw OverflowException();
+        } else {
+            // max < l - r == true
+            if (std::numeric_limits<T>::max() + r < l)
+                throw UnderflowException();
+        }
+    }
+
     return new Operand<T>(
-        convertOperand<T>(&left) - convertOperand<T>(&right)
+        l + r
     );
 }
 
