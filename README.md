@@ -30,5 +30,3 @@ SEP := '\n'+
 
 todo:
 * get rid of trailing zeros when printing floats
-* should read everything from the standard input and then execute it
-

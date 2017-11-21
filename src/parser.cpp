@@ -48,11 +48,11 @@ Parser &Parser::operator=(Parser const &target) {
 void Parser::_createOperand(std::string operand)
 {
     std::size_t split;
-    eOperandType type = Float;
+    eOperandType type = Float; //todo
 
     //validate format
     if (std::regex_match(operand, std::regex("\\w+\\d*\\(\\d+\\.?\\d*\\)")) == false)
-        throw std::exception();
+        throw UnknownInstructionException();
     
     split = operand.find("(");
 

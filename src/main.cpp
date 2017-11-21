@@ -20,14 +20,20 @@ int main(int argc, char** argv)
 
         file.close();
     } else {
-        std::strinstream instructions;
+        std::stringstream instructions;
         std::string line;
 
-        while (std::getline(line, std::cin)) {
-            instructions << line;
+        while (
+            std::getline(std::cin, line)
+            && line != ";;"
+        ) {
+            instructions << line + "\n";
         }
 
-        if (std::cin.eof() == false) {
+        if (
+            std::cin.eof() == false
+            && line != ";;"
+        ) {
             std::cerr << "Error reading instructions\n";
             return 1;
         }
