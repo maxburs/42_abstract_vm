@@ -7,7 +7,7 @@
 # include <convert.h> //toString()
 # include <algorithm> //max()
 # include <vm_exceptions.h>
-# include <limits>
+# include <limits> //max(), min(), is_integer, is_singed
 
 template <typename T>
 T convertOperand(IOperand const * op);

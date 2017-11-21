@@ -91,7 +91,19 @@ eInstructionType Parser::nextInstructionType(void) {
     std::string line;
     
     do {
-        std::getline(this->_instr_input, line);
+        if (!std::getline(this->_instr_input, line)) {
+            if (this->_instr_input.eof())
+                throw ExitException();
+            else
+                throw VMException("Unknown input read error");
+        }
+        if (
+            this->_alternate_input == false
+            && line[0] == ';'
+            && line[1] == ';'
+        ) {
+            throw ExitException();
+        }
         this->_line_number++;
     } while (
         //skips comments

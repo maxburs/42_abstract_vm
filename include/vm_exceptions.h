@@ -101,4 +101,11 @@ public:
     ) {}
 };
 
+class ExitException : public VMException {
+public:
+    ExitException(void) : VMException (
+        "The program doesn’t have an exit instruction"
+    ) {}
+};
+
 #endif
