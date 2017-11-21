@@ -178,8 +178,9 @@ int AbstractVM::run(void)
             (this->*AbstractVM::_instructions[type])();
         }
     } catch(VMException &e) {
-        std::cerr << "Line " + this->_parser.getLineNumber()
-            << " : Error: " << e.what() << "\n";
+        std::cerr << "Line "
+            << std::to_string(this->_parser.getLineNumber())
+            << " : Error : " << e.what() << "\n";
         return 1;
     }
     return 0;

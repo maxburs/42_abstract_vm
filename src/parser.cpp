@@ -47,20 +47,17 @@ Parser &Parser::operator=(Parser const &target) {
 //creates operand from op part of instr; ex: int8(4)
 void Parser::_createOperand(std::string operand)
 {
-    std::size_t split;
-    eOperandType type = Float; //todo
-
     //validate format
     if (std::regex_match(operand, std::regex("\\w+\\d*\\(\\d+\\.?\\d*\\)")) == false)
         throw UnknownInstructionException();
     
-    split = operand.find("(");
+    std::size_t const split = operand.find("(");
 
     auto got = Parser::_types.find(operand.substr(0, split));
     if (got == Parser::_types.end())
         throw UnknownInstructionException();
 
-    type = got->second;
+    eOperandType const type = got->second;
 
     delete this->_operand;
     this->_operand = Parser::_operandFactory.createOperand(
