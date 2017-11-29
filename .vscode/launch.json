@@ -40,7 +40,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceRoot}/avm",
-            "args": ["./tests/1.avm"],
+            "args": ["./tests/test1.avm"],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
             "environment": [],

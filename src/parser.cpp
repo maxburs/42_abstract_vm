@@ -89,7 +89,7 @@ eInstructionType Parser::nextInstructionType(void) {
         }
         this->_line_number++;
     } while (
-        //skips comments
+        // skips comments
         line[0] == ';'
     );
 
@@ -97,11 +97,19 @@ eInstructionType Parser::nextInstructionType(void) {
 }
 
 eInstructionType Parser::parseLine(std::string line) {
+
+    // remove comment
+    auto comment_start = line.find(';');
+    if (comment_start != std::string::npos)
+        line.erase(comment_start);
+
+    // remove trailing whitespace
+    line.erase(line.find_last_not_of(" \f\n\r\t\v") + 1);
     
-    auto split = line.find(" ");
+    auto split = line.find(' ');
     std::string instruction;
 
-    //if a space was found split the instruction
+    // if a space was found split the instruction
     if (split != std::string::npos) {
         this->_createOperand(line.substr(split + 1));
         instruction = line.substr(0, split);

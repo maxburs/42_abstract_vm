@@ -127,7 +127,6 @@ void AbstractVM::_print(void) {
     if (this->_vector.back()->getType() != Int8)
         throw PrintException();
 
-    //todo: fix this
     std::cout << this->_vector.back()->toString() << "\n";
 }
 
