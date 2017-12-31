@@ -6,6 +6,7 @@
 # include <cstdint> // int8_t, int32_t
 # include <iostream> // fixed
 # include <iomanip> // setprecision
+# include <vm_exceptions.h> // OverflowException
 
 template <typename T>
 T from_string(std::string const &str) {
@@ -14,17 +15,17 @@ T from_string(std::string const &str) {
 
     ss << str;
     ss >> value;
+
+    if (ss.fail() || ss.eof()) {
+        throw OverflowException();
+    }
+
     return value;
 }
 
 template <>
 inline int8_t from_string(std::string const &str) {
-    int32_t value;
-    std::stringstream ss;
-
-    ss << str;
-    ss >> value;
-    return (int8_t)value;
+    return from_string<int32_t>(str);
 }
 
 template <typename T>

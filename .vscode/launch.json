@@ -70,11 +70,15 @@
             }
         },
         {
-            "name": "C++ Attach",
+            "name": "avm 3",
             "type": "cppdbg",
-            "request": "attach",
-            "program": "enter program name, for example ${workspaceRoot}/a.out",
-            "processId": "${command:pickProcess}",
+            "request": "launch",
+            "program": "${workspaceRoot}/avm",
+            "args": ["./tests/test3.avm"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}",
+            "environment": [],
+            "externalConsole": true,
             "linux": {
                 "MIMode": "gdb",
                 "setupCommands": [
