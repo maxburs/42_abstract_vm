@@ -48,7 +48,7 @@ Parser &Parser::operator=(Parser const &target) {
 void Parser::_createOperand(std::string operand)
 {
     //validate format
-    if (std::regex_match(operand, std::regex("\\w+\\d*\\(\\d+\\.?\\d*\\)")) == false)
+    if (std::regex_match(operand, std::regex("\\w+\\d*\\(\\-?\\d+\\.?\\d*\\)")) == false)
         throw UnknownInstructionException();
     
     std::size_t const split = operand.find("(");

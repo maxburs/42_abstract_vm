@@ -1,0 +1,4 @@
+; should overflow
+push int8(1000)
+dump
+exit

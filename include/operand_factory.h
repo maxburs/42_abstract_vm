@@ -20,19 +20,6 @@ class OperandFactory
         IOperand const * createOperand(eOperandType type, std::string const &value) const;
 };
 
-// template <>
-// inline Operand<int8_t> const *OperandFactory::createSpecific(std::string const &value) const
-// {
-//     std::stringstream ss(value);
-//     int32_t num;
-
-//     ss >> num;
-
-//     std::cout << "fail bit: " << ss.fail() << "\n";
-
-//     return new Operand<int8_t>(num);
-// }
-
 template <typename T>
 inline Operand<T> const *OperandFactory::createSpecific(std::string const &value) const
 {
