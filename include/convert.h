@@ -31,9 +31,6 @@ template <>
 inline int8_t from_string(std::string const &str) {
     auto value = from_string<int32_t>(str);
 
-    std::cout << "max: " << (int)std::numeric_limits<int8_t>::max() << "\n";
-    std::cout << "min: " << (int)std::numeric_limits<int8_t>::min() << "\n";
-
     if (
         value < std::numeric_limits<int8_t>::min()
         || value > std::numeric_limits<int8_t>::max()

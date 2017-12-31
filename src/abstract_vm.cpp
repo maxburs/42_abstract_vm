@@ -124,10 +124,12 @@ void AbstractVM::_mod(void) {
 }
 
 void AbstractVM::_print(void) {
-    if (this->_vector.back()->getType() != Int8)
+    auto operand = this->_vector.back();
+
+    if (operand->getType() != Int8)
         throw PrintException();
 
-    std::cout << (*(Operand<int8_t>*)(this->_vector.back())).getValue() << "\n";
+    std::cout << (*(Operand<int8_t>*)operand).getValue();
 }
 
 void AbstractVM::_dump(void) {
