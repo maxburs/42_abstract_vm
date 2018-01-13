@@ -8,6 +8,7 @@
 # include <algorithm> // max()
 # include <vm_exceptions.h>
 # include <limits> // max(), min(), is_integer, is_singed
+# include <cmath> // fmodf()
 
 template <typename T>
 T convertOperand(IOperand const * op);
@@ -145,8 +146,9 @@ public:
             case Int32:
                 return modulus<int32_t>(*this, rhs);
             case Float:
+                return modulus<float>(*this, rhs);
             case Double:
-                throw ModulusWithFloatException();
+                return modulus<double>(*this, rhs);
             default:
                 throw CorruptIOperandException();
         }
@@ -213,24 +215,37 @@ IOperand const *multiply(IOperand const &left, IOperand const &right) {
     bool left_positive =  l > 0;
     bool right_positive = r > 0;
 
-    if (// if type can overflow
-        std::numeric_limits<T>::is_signed
-        && std::numeric_limits<T>::is_integer
-    ) {
-        if(left_positive == right_positive) {
-            // max < r * l == true
-            if (std::numeric_limits<T>::max() / l < r)
-                throw OverflowException();
-        } else {
-            // min > r * l == true
-            if (std::numeric_limits<T>::min() / l > r)
-                throw UnderflowException();
-        }
+    if(left_positive == right_positive) {
+        // max < r * l == true
+        if (std::numeric_limits<T>::max() / l < r)
+            throw OverflowException();
+    } else {
+        // min > r * l == true
+        if (std::numeric_limits<T>::min() / l > r)
+            throw UnderflowException();
     }
 
     return new Operand<T>(
         l * r
     );
+}
+
+template <>
+inline IOperand const *multiply<float>(IOperand const &left, IOperand const &right) {
+    float result = convertOperand<float>(&left) * convertOperand<float>(&right);
+
+    if (isinf(result))
+        throw OverflowException();
+    return new Operand<float>(result);
+}
+
+template <>
+inline IOperand const *multiply<double>(IOperand const &left, IOperand const &right) {
+    double result = convertOperand<double>(&left) * convertOperand<double>(&right);
+
+    if (isinf(result))
+        throw OverflowException();
+    return new Operand<double>(result);
 }
 
 template <typename T>
@@ -282,8 +297,8 @@ IOperand const *subtract(IOperand const &left, IOperand const &right) {
             if (std::numeric_limits<T>::min() + r > l)
                 throw OverflowException();
         } else {
-            // max < l - r == true
-            if (std::numeric_limits<T>::max() + r < l)
+            // max < l + r == true
+            if (std::numeric_limits<T>::max() - r < l)
                 throw UnderflowException();
         }
     }
@@ -302,6 +317,30 @@ IOperand const *modulus(IOperand const &left, IOperand const &right) {
 
     return new Operand<T>(
         convertOperand<T>(&left) % right_val
+    );
+}
+
+template <>
+inline IOperand const *modulus<float>(IOperand const &left, IOperand const &right) {
+    float right_val = convertOperand<float>(&right);
+
+    if (right_val == 0)
+        throw OperationByZeroException("Modulus");
+
+    return new Operand<float>(
+        fmodf(convertOperand<float>(&left), right_val)
+    );
+}
+
+template <>
+inline IOperand const *modulus<double>(IOperand const &left, IOperand const &right) {
+    double right_val = convertOperand<double>(&right);
+
+    if (right_val == 0)
+        throw OperationByZeroException("Modulus");
+
+    return new Operand<double>(
+        fmod(convertOperand<double>(&left), right_val)
     );
 }
 

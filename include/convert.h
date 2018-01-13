@@ -41,7 +41,7 @@ inline int8_t from_string(std::string const &str) {
 }
 
 template <typename T>
-std::string to_string(T num) {
+inline std::string to_string(T num) {
     return std::to_string(num);
 }
 
