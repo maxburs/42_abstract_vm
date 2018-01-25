@@ -215,19 +215,19 @@ IOperand const *multiply(IOperand const &left, IOperand const &right) {
     bool left_positive =  l > 0;
     bool right_positive = r > 0;
 
-    if(left_positive == right_positive) {
-        // max < r * l == true
-        if (std::numeric_limits<T>::max() / l < r)
-            throw OverflowException();
-    } else {
-        // min > r * l == true
-        if (std::numeric_limits<T>::min() / l > r)
-            throw UnderflowException();
+    if (l != 0) {
+        if (left_positive == right_positive) {
+            // max < r * l == true
+            if (std::numeric_limits<T>::max() / l < r)
+                throw OverflowException();
+        } else {
+            // min > r * l == true
+            if (std::numeric_limits<T>::min() / l > r)
+                throw UnderflowException();
+        }
     }
 
-    return new Operand<T>(
-        l * r
-    );
+    return new Operand<T>(l * r);
 }
 
 template <>
@@ -278,9 +278,7 @@ IOperand const *add(IOperand const &left, IOperand const &right) {
         }
     }
 
-    return new Operand<T>(
-        l + r
-    );
+    return new Operand<T>(l + r);
 }
 
 template <typename T>
@@ -303,9 +301,7 @@ IOperand const *subtract(IOperand const &left, IOperand const &right) {
         }
     }
 
-    return new Operand<T>(
-        l + r
-    );
+    return new Operand<T>(l + r);
 }
 
 template <typename T>

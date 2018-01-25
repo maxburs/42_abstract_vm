@@ -60,7 +60,7 @@ void AbstractVM::_add(void) {
     second = this->_vector.back();
     this->_vector.pop_back();
 
-    this->_vector.push_back((*first + *second));
+    this->_vector.push_back((*second + *first));
 }
 
 void AbstractVM::_sub(void) {
@@ -75,7 +75,7 @@ void AbstractVM::_sub(void) {
     second = this->_vector.back();
     this->_vector.pop_back();
 
-    this->_vector.push_back((*first - *second));
+    this->_vector.push_back((*second - *first));
 }
 
 void AbstractVM::_mul(void) {
@@ -90,7 +90,7 @@ void AbstractVM::_mul(void) {
     second = this->_vector.back();
     this->_vector.pop_back();
 
-    this->_vector.push_back((*first * *second));
+    this->_vector.push_back((*second * *first));
 }
 
 void AbstractVM::_div(void) {
@@ -105,7 +105,7 @@ void AbstractVM::_div(void) {
     second = this->_vector.back();
     this->_vector.pop_back();
 
-    this->_vector.push_back((*first / *second));
+    this->_vector.push_back((*second / *first));
 }
 
 void AbstractVM::_mod(void) {
@@ -120,7 +120,7 @@ void AbstractVM::_mod(void) {
     second = this->_vector.back();
     this->_vector.pop_back();
 
-    this->_vector.push_back((*first % *second));
+    this->_vector.push_back((*second % *first));
 }
 
 void AbstractVM::_print(void) {

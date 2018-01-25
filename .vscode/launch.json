@@ -1,6 +1,18 @@
 {
     "version": "0.2.0",
     "configurations": [
+    {
+        "name": "test avm",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/tests/test.avm",
+        "args": [],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "externalConsole": true,
+        "MIMode": "lldb"
+    },
         {
             "name": "C++ Launch",
             "type": "cppdbg",
